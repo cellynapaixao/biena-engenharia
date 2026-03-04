@@ -1,6 +1,6 @@
 name: Build and Deploy to HostGator
 on:
-  workflow_dispatch:  # Allows manual runs
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -8,16 +8,22 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v4.3.0
 
-    # Add your build/setup steps here if needed, for example:
-    # - name: Install dependencies
-    #   run: npm install
-    # - name: Build project
-    #   run: npm run build
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build Next.js project
+      run: npm run build
+      env:
+        NODE_ENV: production
 
     - name: Deploy to HostGator via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.0
@@ -25,5 +31,8 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./
+        local-dir: ./out/
         server-dir: /public_html/
+        state-name: .ftp-deploy-sync-state.json
+        state-dir: ./
+        dry-run: false
