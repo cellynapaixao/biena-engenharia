@@ -1,0 +1,15 @@
+# PROJECT BIENA_ENG
+# BIENA_ENG is a project focused on developing an beautiful and user-friendly web-site. Aims to provide an engaging and interactive landing page for the clients being prospected.
+## Features
+- Responsive design for optimal viewing on various devices.
+- Interactive elements to enhance user experience.
+- Clean and modern aesthetic to attract and retain visitors.
+## Technologies Used
+The project uses pnpm (pnpm-lock.yaml)
+- It's a Next.js application (app/ directory with layout.tsx, page.tsx)
+- It uses TypeScript (tsconfig.json)
+- It has Tailwind CSS 
+## Installation
+1. Clone the repository: `git clone 
+2. Navigate to the project directory: `cd BIENA_ENG`
+3. Open `index.html` in your web browser to view the landing page.
