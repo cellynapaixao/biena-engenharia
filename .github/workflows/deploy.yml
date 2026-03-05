@@ -8,13 +8,18 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./biena-engenharia
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4.3.0
+      uses: actions/checkout@v4
+      with:
+        path: ./biena-engenharia
 
     - name: Setup pnpm
-      uses: pnpm/action-setup@v2
+      uses: pnpm/action-setup@v3
       with:
         version: 8
 
@@ -23,6 +28,7 @@ jobs:
       with:
         node-version: '20'
         cache: 'pnpm'
+        cache-dependency-path: 'biena-engenharia/pnpm-lock.yaml'
 
     - name: Install dependencies
       run: pnpm install --frozen-lockfile
@@ -38,8 +44,5 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./out/
+        local-dir: ./biena-engenharia/out/
         server-dir: /public_html/
-        state-name: .ftp-deploy-sync-state.json
-        state-dir: ./
-        dry-run: false
