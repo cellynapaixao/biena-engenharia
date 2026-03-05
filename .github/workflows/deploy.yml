@@ -1,5 +1,5 @@
 name: Build and Deploy to HostGator
-on:
+on income:
   workflow_dispatch:
   push:
     branches:
@@ -8,18 +8,13 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./biena-engenharia
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      with:
-        path: ./biena-engenharia
 
     - name: Setup pnpm
-      uses: pnpm/action-setup@v3
+      uses: pnpm/action-setup@v2
       with:
         version: 8
 
@@ -28,10 +23,9 @@ jobs:
       with:
         node-version: '20'
         cache: 'pnpm'
-        cache-dependency-path: 'biena-engenharia/pnpm-lock.yaml'
 
     - name: Install dependencies
-      run: pnpm install --frozen-lockfile
+      run: pnpm install --no-frozen-lockfile
 
     - name: Build Next.js project
       run: pnpm build
@@ -44,5 +38,5 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./biena-engenharia/out/
-        server-dir: /public_html/
+        local-dir: ./out/
+        server-dir: /public__html/
